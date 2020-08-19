@@ -21,7 +21,7 @@ class RoomsController < ApplicationController
   include Recorder
   include Joiner
   include Populator
-  include HTTParty
+ # include HTTParty
 
   before_action :validate_accepted_terms, unless: -> { !Rails.configuration.terms }
   before_action :validate_verified_email, except: [:show, :join],
@@ -49,7 +49,7 @@ class RoomsController < ApplicationController
     @room.room_settings = create_room_settings_string(room_params)
     
     #send otp
-    HTTParty.get('http://msg.kiriinfotech.com/rest/services/sendSMS/sendGroupSms?AUTH_KEY=3040d266519e1719deb33cf2f9b3d7e5&message=message&senderId=APPTRN&routeId=1&mobileNos=9694998693&smsContentType=english')
+  #  HTTParty.get('http://msg.kiriinfotech.com/rest/services/sendSMS/sendGroupSms?AUTH_KEY=3040d266519e1719deb33cf2f9b3d7e5&message=message&senderId=APPTRN&routeId=1&mobileNos=9694998693&smsContentType=english')
 
     # Save the room and redirect if it fails
     return redirect_to current_user.main_room, flash: { alert: I18n.t("room.create_room_error") } unless @room.save
